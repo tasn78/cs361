@@ -1,4 +1,3 @@
-# endpoint_client.py
 import socket
 import json
 import uuid
@@ -43,4 +42,5 @@ if __name__ == '__main__':
     client = EndpointClient('localhost', 5000)
     while True:
         client.send_heartbeat()
-        time.sleep(60)  # Send heartbeat every minute
+        # sends heartbeat every 60 seconds
+        time.sleep(60) 

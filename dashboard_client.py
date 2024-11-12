@@ -1,4 +1,3 @@
-# dashboard_server.py
 from flask import Flask, render_template, jsonify
 from datetime import datetime
 import sqlite3
@@ -67,19 +66,11 @@ class CommunicationServer:
             print(f"Error handling client: {e}")
         finally:
             client.close()
-# dashboard_server.py
-from flask import Flask, jsonify
-from datetime import datetime
-import sqlite3
-import threading
-import socket
-import json
-
-# [Keep your EndpointManager and CommunicationServer classes the same]
 
 app = Flask(__name__)
 endpoint_manager = EndpointManager()
 
+# raw html since this is a prototype 
 @app.route('/')
 def dashboard():
     endpoints = endpoint_manager.get_all_endpoints()
@@ -129,12 +120,12 @@ def get_endpoints():
     return jsonify(endpoints)
 
 if __name__ == '__main__':
-    # Start communication server in a separate thread
+    # start comms server on a seperate thread
     comm_server = CommunicationServer()
     server_thread = threading.Thread(target=comm_server.start)
     server_thread.daemon = True
     server_thread.start()
     
-    # Start web interface
+    # start web interface
     print("Starting web server on http://localhost:8080")
     app.run(host='0.0.0.0', port=8080, debug=True)
