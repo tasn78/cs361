@@ -127,5 +127,5 @@ if __name__ == '__main__':
     server_thread.start()
     
     # start web interface
-    print("Starting web server on http://localhost:8080")
+    print("Starting web server on http://localhost:8089")
     app.run(host='0.0.0.0', port=8080, debug=True)
