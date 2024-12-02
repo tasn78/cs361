@@ -6,12 +6,13 @@ import time
 from datetime import datetime
 
 class EndpointClient:
-    def __init__(self, server_host='127.0.0.1', server_port=5000):
+    def __init__(self, server_host='127.0.0.1', server_port=5000, network='192.168.1'):
         self.server_host = server_host
         self.server_port = server_port
         self.endpoint_id = str(uuid.uuid4())
         self.device_types = ['laptop', 'desktop', 'workstation', 'server']
         self.device_name = f"{random.choice(self.device_types)}-{random.randint(100,999)}"
+        self.network = network  # Fixed network prefix
 
     def get_system_info(self):
         return {
@@ -26,9 +27,10 @@ class EndpointClient:
         data = {
             'id': self.endpoint_id,
             'hostname': self.device_name,
-            'ip': f"192.168.{random.randint(1,254)}.{random.randint(1,254)}",
+            'ip': f"{self.network}.{random.randint(1,254)}",  # Consistent network prefix
             'system_info': self.get_system_info()
         }
+        
         try:
             client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             client.connect((self.server_host, self.server_port))
